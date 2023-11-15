@@ -15,10 +15,9 @@ jobs:
       - name: Get Pull Request URL
         id: get-pr-url
         run: |
-          PR_URL=$(jq --raw-output .issue.pull_request.html_url "$GITHUB_EVENT_PATH")
-          echo "Pull Request URL: $PR_URL"
-          echo "::set-output name=pr_url::$PR_URL"
+          PR_URL_OUT_PUT=$(jq --raw-output .issue.pull_request.html_url "$GITHUB_EVENT_PATH")
+          echo "PR_URL=$PR_URL_OUT_PUT"　>> $GITHUB_ENV
 
       - name: Use Pull Request URL
         run: |
-          echo "Using Pull Request URL: ${{ steps.get-pr-url.outputs.pr_url }}"
+          echo "Using Pull Request URL: ${PR_URL}"
