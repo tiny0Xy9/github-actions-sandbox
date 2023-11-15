@@ -6,7 +6,7 @@ on:
 
 jobs:
   deploy:
-    if: github.event.issue.pull_request && startsWith(github.event.comment.body, '/get_pr_url')
+    if: github.event.issue.pull_request && startsWith(github.event.comment.body, '/get_pr_html_url')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
