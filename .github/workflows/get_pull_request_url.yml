@@ -1,0 +1,24 @@
+name: Deploy on Comment
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  deploy:
+    if: github.event.issue.pull_request && startsWith(github.event.comment.body, '/get')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Get Pull Request URL
+        id: get-pr-url
+        run: |
+          PR_URL=$(jq --raw-output .issue.pull_request.url "$GITHUB_EVENT_PATH")
+          echo "Pull Request URL: $PR_URL"
+          echo "::set-output name=pr_url::$PR_URL"
+
+      - name: Use Pull Request URL
+        run: |
+          echo "Using Pull Request URL: ${{ steps.get-pr-url.outputs.pr_url }}"
