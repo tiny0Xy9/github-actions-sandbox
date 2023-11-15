@@ -6,7 +6,7 @@ on:
 
 jobs:
   deploy:
-    if: github.event.issue.pull_request && startsWith(github.event.comment.body, '/get')
+    if: github.event.issue.pull_request && startsWith(github.event.comment.body, '/get_pr_url')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -15,7 +15,7 @@ jobs:
       - name: Get Pull Request URL
         id: get-pr-url
         run: |
-          PR_URL=$(jq --raw-output .issue.pull_request.url "$GITHUB_EVENT_PATH")
+          PR_URL=$(jq --raw-output .issue.pull_request.html_url "$GITHUB_EVENT_PATH")
           echo "Pull Request URL: $PR_URL"
           echo "::set-output name=pr_url::$PR_URL"
 
